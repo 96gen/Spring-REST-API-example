@@ -2,6 +2,7 @@ package com.restapi.Controller;
 
 import com.restapi.Entity.Student;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -33,5 +34,15 @@ public class StudentController {
         students.add(new Student(3, "EEE", "FFF"));
         students.add(new Student(4, "GGG", "HHH"));
         return students;
+    }
+    //可以透過 http://localhost:8080/students/數字/名字/姓氏 來傳入資料
+    //舉例來說輸入 http://localhost:8080/students/1/AAA/BBB
+    //就能看到回傳的{"id":1,"firstName":"AAA","lastName":"BBB"}
+    //透過網址傳入學生的ID、firstName、lastName
+    @GetMapping("/students/{id}/{firstName}/{lastName}")
+    public Student studentPathVariable(@PathVariable("id") int studentId,
+                                       @PathVariable("firstName") String firstName,
+                                       @PathVariable("lastName") String lastName){
+        return new Student(studentId, firstName, lastName);
     }
 }
