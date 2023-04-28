@@ -71,4 +71,20 @@ public class StudentController {
         System.out.println(student.getLastName());
         return student;
     }
+    //使用PUT來修改特定id的部分資料
+    //使用PUT傳資料到 http://localhost:8080/students/數字/update
+    @PutMapping("/students/{id}/update")
+    public Student updateStudent(@RequestBody Student student,
+                                 @PathVariable("id") int id){
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+    }
+    //使用DELETE刪除指定id的資料
+    //使用DELETE http://localhost:8080/students/數字/delete
+    @DeleteMapping("/students/{id}/delete")
+    public String deleteStudent(@PathVariable("id") int id){
+        System.out.println(id);
+        return "Student deleted successfully!";
+    }
 }
