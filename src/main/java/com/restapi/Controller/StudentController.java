@@ -1,10 +1,8 @@
 package com.restapi.Controller;
 
 import com.restapi.Entity.Student;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class StudentController {
     //就能看到回傳的{"id":1,"firstName":"AAA","lastName":"BBB"}
     //透過網址傳入學生的ID、firstName、lastName
     //使用@RequestParam讀取網址傳來的資料
-    //和@PathVariable不同，傳入的順序不限定為「id再來firstName最後是lastName」
+    //和@PathVariable不同，傳入的順序不限定為「先id再來firstName最後是lastName」
     //換成http://localhost:8080/students/query?id=1&lastName=BBB&firstName=AAA
     //還是能取得相同的結果
     @GetMapping("/students/query")
@@ -60,5 +58,17 @@ public class StudentController {
                                           @RequestParam String firstName,
                                           @RequestParam String lastName){
         return new Student(id, firstName, lastName);
+    }
+    //使用POST傳資訊到 http://localhost:8080/students/create
+    //@RequestBody接收傳來的資訊
+    //成功的話會得到 201 Created的狀態碼
+    //傳入的順序不限定為「先id再來firstName最後是lastName
+    @PostMapping("/students/create")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Student createStudent(@RequestBody Student student){
+        System.out.println(student.getId());
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
     }
 }
